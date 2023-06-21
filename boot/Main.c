@@ -4,6 +4,7 @@
 #include "HalTimer.h"
 #include "task.h"
 #include "Kernel.h"
+#include "event.h"
 
 #include "HalUart.h"
 #include "HalInterrupt.h"
@@ -78,6 +79,7 @@ static void Kernel_init(void) {
     uint32_t taskId;
 
 	Kernel_task_init();
+    Kernel_event_flag_init();
 
 	taskId = Kernel_task_create(User_task0);
 	if (NOT_ENOUGH_TASK_NUM == taskId)
@@ -96,9 +98,17 @@ static void Kernel_init(void) {
 
 void User_task0(void) {
     uint32_t local = 0;
-	
+    debug_printf("User task #0 Stack pointer: 0x%x\n", &local);
+
 	while (true) {
-        debug_printf("User task #0 Stack pointer: 0x%x\n", &local);
+        // delay(3000);
+        KernelEventFlag_t handle_event = Kernel_wait_events(KernelEventFlag_UartIn);
+        switch (handle_event)
+        {
+        case KernelEventFlag_UartIn:
+            debug_printf("\nEvent handled\n");
+            break;  // Why break?!?
+        }
 		Kernel_yield();
 	}
 }
@@ -108,6 +118,7 @@ void User_task1(void) {
 
 	while (true) {
         debug_printf("User task #1 Stack pointer: 0x%x\n", &local);
+        delay(3000);
 		Kernel_yield();
 	}
 }
@@ -117,6 +128,7 @@ void User_task2(void) {
 
     while (true) {
         debug_printf("User task #2 Stack pointer: 0x%x\n", &local);
+        delay(3000);
 		Kernel_yield();
 	}
 }
