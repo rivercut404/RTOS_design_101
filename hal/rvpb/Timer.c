@@ -2,6 +2,7 @@
 #include "Timer.h"
 #include "HalTimer.h"
 #include "HalInterrupt.h"
+#include "task.h"
 
 #include "HalUart.h"
 #include "stdio.h"
@@ -31,9 +32,10 @@ void Hal_timer_init(void) {
 	Timer->timerxcontrol.bits.TimerPre = 0;  // Timer prescale bit
 	Timer->timerxcontrol.bits.IntEnable = 1;
 
-	uint32_t interval_1ms = TIMER_1MHZ_INTERVAL / 1024;
+    // Generate the timer interrupt every 100ms 
+	uint32_t interval_100ms = (TIMER_1MHZ_INTERVAL/1024) * 10;
 
-	Timer->timerxload = interval_1ms;
+	Timer->timerxload = interval_100ms;
 	Timer->timerxcontrol.bits.TimerEn = 1;
 
 	internal_1ms_counter = 0;
@@ -44,11 +46,11 @@ void Hal_timer_init(void) {
 }
 
 static void interrupt_handler(void) {
-    internal_1ms_counter++;
+    // internal_1ms_counter++;
 
 	// Call kernel to switch user task 
-	// Implementation ...
-
+	debug_printf("Timer has been expired");
+	Kernel_task_scheduler();  // context switching
 	Timer->timerxintclr = 1;
 }
 
