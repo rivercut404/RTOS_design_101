@@ -3,6 +3,7 @@
 #include "stdbool.h"
 #include "HalTimer.h"
 #include "task.h"
+#include "Kernel.h"
 
 #include "HalUart.h"
 #include "HalInterrupt.h"
@@ -34,12 +35,15 @@ void main(void) {
 
 	Timer_test();
 
+    Kernel_init();
+
     while (true);
 }
 
 static void Hw_init(void) {
     Hal_interrupt_init();
     Hal_uart_init();
+    Hal_timer_init();
 }
 
 static void Printf_test(void) {
@@ -59,10 +63,15 @@ static void Printf_test(void) {
 }
 
 static void Timer_test(void) {
-    while (true) {
-	    debug_printf("current count: %u\n", Hal_timer_get_1ms_counter());
-		delay(1000);
-	}
+    debug_printf("current count: %u\n", Hal_timer_get_1ms_counter());
+    delay(1000);
+    debug_printf("current count: %u\n", Hal_timer_get_1ms_counter());
+    delay(1000);
+    debug_printf("current count: %u\n", Hal_timer_get_1ms_counter());
+    delay(1000);
+    debug_printf("current count: %u\n", Hal_timer_get_1ms_counter());
+    delay(1000);
+    debug_printf("current count: %u\n", Hal_timer_get_1ms_counter());
 }
 
 static void Kernel_init(void) {
@@ -81,22 +90,33 @@ static void Kernel_init(void) {
     taskId = Kernel_task_create(User_task2);
 	if (NOT_ENOUGH_TASK_NUM == taskId)
 	    putstr("Task2 creation fail\n");
+
+	Kernel_start();
 }
 
 void User_task0(void) {
-    debug_printf("User task #0\n");
-
-	while (true);
+    uint32_t local = 0;
+	
+	while (true) {
+        debug_printf("User task #0 Stack pointer: 0x%x\n", &local);
+		Kernel_yield();
+	}
 }
 
 void User_task1(void) {
-    debug_printf("User task #1\n");
+    uint32_t local = 1;
 
-	while (true);
+	while (true) {
+        debug_printf("User task #1 Stack pointer: 0x%x\n", &local);
+		Kernel_yield();
+	}
 }
 
 void User_task2(void) {
-    debug_printf("User task #2\n");
+    uint32_t local = 2;
 
-	while (true);
+    while (true) {
+        debug_printf("User task #2 Stack pointer: 0x%x\n", &local);
+		Kernel_yield();
+	}
 }

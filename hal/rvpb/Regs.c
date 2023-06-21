@@ -3,6 +3,7 @@
 #include "Interrupt.h"
 #include "Timer.h"
 
+// In this file is the declarations of the memory mapped IO devices.
 volatile PL011_t *Uart = (PL011_t*)UART_BASE_ADDRESS0;  // never optimize because of "volatile"
 volatile GicCput_t *GicCpu = (GicCput_t*)GIC_CPU_BASE;
 volatile GicDist_t *GicDist = (GicDist_t*)GIC_DIST_BASE;

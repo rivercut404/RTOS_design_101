@@ -35,7 +35,7 @@ void Hal_interrupt_enable(uint32_t interrupt_num) {
 }
 
 void Hal_interrupt_disable(uint32_t interrupt_num) {
-    if ((interrupt_num < GIC_IRQ_START) || (GIC_IRQ_END) < interrupt_num)
+    if ((interrupt_num < GIC_IRQ_START) || (GIC_IRQ_END < interrupt_num))
         return;
     
     uint32_t bit_num = interrupt_num - GIC_IRQ_START;

@@ -3,6 +3,9 @@
 #include "HalTimer.h"
 #include "HalInterrupt.h"
 
+#include "HalUart.h"
+#include "stdio.h"
+
 extern volatile Timer_t *Timer;
 
 static void interrupt_handler(void);
@@ -25,10 +28,10 @@ void Hal_timer_init(void) {
 	Timer->timerxcontrol.bits.TimerMode = TIMER_PERIODIC;
 	Timer->timerxcontrol.bits.TimerSize = TIMER_32BIT_COUNTER;
 	Timer->timerxcontrol.bits.OneShot = 0;
-	Timer->timerxcontrol.bits.TimerPre = 0;
+	Timer->timerxcontrol.bits.TimerPre = 0;  // Timer prescale bit
 	Timer->timerxcontrol.bits.IntEnable = 1;
 
-	uint32_t interval_1ms = TIMER_1MHZ_INTERVAL / 1000;
+	uint32_t interval_1ms = TIMER_1MHZ_INTERVAL / 1024;
 
 	Timer->timerxload = interval_1ms;
 	Timer->timerxcontrol.bits.TimerEn = 1;
@@ -42,6 +45,9 @@ void Hal_timer_init(void) {
 
 static void interrupt_handler(void) {
     internal_1ms_counter++;
+
+	// Call kernel to switch user task 
+	// Implementation ...
 
 	Timer->timerxintclr = 1;
 }

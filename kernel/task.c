@@ -9,15 +9,19 @@ static uint32_t sAllocated_tcb_index;
 
 static uint32_t sCurrent_tcb_index;
 static KernelTcb_t *Scheduler_round_robin_algorithm(void);
+static void Save_context(void);
+static void Restore_context(void);
 
 // Variables for context switching
 static KernelTcb_t *sCurrent_tcb;
 static KernelTcb_t *sNext_tcb;
 
 void Kernel_task_init(void) {
-    sAllocated_tcb_index = 0;
+    sAllocated_tcb_index = 0;  // The number of created user task
+	sCurrent_tcb_index = 0;
 
 	for (uint32_t i=0; i<MAX_TASK_NUM; i++) {
+	    // Set the sp for user task context
 	    sTask_list[i].stack_base = (uint8_t*)(TASK_STACK_START + (i * USR_TASK_STACK_SIZE));
 		sTask_list[i].sp = (uint32_t)sTask_list[i].stack_base + USR_TASK_STACK_SIZE - 4;
 
@@ -26,6 +30,11 @@ void Kernel_task_init(void) {
 		ctx->pc = 0;
 		ctx->spsr = ARM_MODE_BIT_SYS;
     }
+}
+
+void Kernel_task_start(void) {
+    sNext_tcb = &sTask_list[sCurrent_tcb_index];
+	Restore_context();
 }
 
 uint32_t Kernel_task_create(KernelTaskFunc_t startFunc) {
@@ -42,7 +51,7 @@ uint32_t Kernel_task_create(KernelTaskFunc_t startFunc) {
 
 static KernelTcb_t *Scheduler_round_robin_algorithm(void) {
     sCurrent_tcb_index++;
-	sCurrnet_tcb_index %= sAllocated_tcb_index;
+	sCurrent_tcb_index %= sAllocated_tcb_index;
 
 	return &sTask_list[sCurrent_tcb_index];
 }
@@ -76,8 +85,8 @@ static __attribute__ ((naked)) void Save_context(void) {
 
 static __attribute__ ((naked)) void Restore_context(void) {
     // Restore next task stack pointer from next TCB 
-	__asm__ ("LDR r0, =sNext_tcb");  // Load the address of next tcb
-	__asm__ ("LDR r0, [r0]");  
+	__asm__ ("LDR r0, =sNext_tcb");  // sNext_tcb is treated like symbol
+	__asm__ ("LDR r0, [r0]");  // Load the address of next tcb 
 	__asm__ ("LDMIA r0!, {sp}");
 
 	// Restore next task context from the next task stack 
