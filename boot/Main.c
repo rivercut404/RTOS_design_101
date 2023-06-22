@@ -4,6 +4,7 @@
 #include "HalTimer.h"
 #include "task.h"
 #include "Kernel.h"
+#include "Timer.h"
 
 #include "HalUart.h"
 #include "HalInterrupt.h"
@@ -95,6 +96,7 @@ static void Kernel_init(void) {
 }
 
 void User_task0(void) {
+    // debug_printf("appr. booting time is %u unit", Hal_timer_get_1ms_counter());
     uint32_t local = 0;
 	debug_printf("User task #0 Stack pointer: 0x%x\n", &local);
 
