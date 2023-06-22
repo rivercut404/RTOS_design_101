@@ -35,7 +35,7 @@ void Hal_timer_init(void) {
 	Timer->timerxcontrol.bits.IntEnable = 1;
 
     // Generate the timer interrupt every 100ms 
-	uint32_t interval_10ms = TIMER_10HZ_INTERVAL / 100;
+	uint32_t interval_10ms = TIMER_10HZ_INTERVAL / 10;
 	Timer->timerxload = interval_10ms;
 	Timer->timerxcontrol.bits.TimerEn = 1;
 
@@ -55,7 +55,9 @@ static void interrupt_handler(void) {
 	Timer->timerxintclr = 1;
     if (((internal_1ms_counter % 10) == 0) && (internal_1ms_counter > 1000)) {
 	    debug_printf("Timer has been expired!!");
-	    Kernel_timer_expired();
+	    // Kernel_timer_expired();  
+		// If Kernel API for context switching is called in ISR, then LR is set to 0
+		// So... maybe because of that the reset handler is executed after the context switching
 	}
 }
 
