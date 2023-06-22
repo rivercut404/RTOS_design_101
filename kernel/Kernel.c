@@ -13,6 +13,16 @@ void Kernel_yield(void) {
     Kernel_task_scheduler();
 }
 
+/* cf. Other implementation (pseudo code) that has destination task when sending signals
+void send_signal(tcb_t *dest_tcb, uint32_t signal) 
+    uint32_t temp_signal = 0; 
+	temp_signal = dest_tcb->receive_signal;
+	dest_tcb->receive_signal = dest_tcb->receive_signal | signal; 
+
+	if (dest_tcb->wait_signal & signal) == 0
+	    dest_tcb->wait_signal = 0;
+		context switching or continue executing
+*/
 void Kernel_send_events(uint32_t event_list) {
     for (uint32_t i=0; i<32; i++) {
 	    if ((event_list >> i) & 1) {

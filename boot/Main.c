@@ -89,10 +89,6 @@ static void Kernel_init(void) {
 	if (NOT_ENOUGH_TASK_NUM == taskId)
 	    putstr("Task1 creation fail\n");
 
-    taskId = Kernel_task_create(User_task2);
-	if (NOT_ENOUGH_TASK_NUM == taskId)
-	    putstr("Task2 creation fail\n");
-
 	Kernel_start();
 }
 
@@ -101,13 +97,13 @@ void User_task0(void) {
     debug_printf("User task #0 Stack pointer: 0x%x\n", &local);
 
 	while (true) {
-        // delay(3000);
         KernelEventFlag_t handle_event = Kernel_wait_events(KernelEventFlag_UartIn);
         switch (handle_event)
         {
         case KernelEventFlag_UartIn:
-            debug_printf("\nEvent handled\n");
-            break;  // Why break?!?
+            debug_printf("\nUartIn Event handled by Task0\n");
+			Kernel_send_events(KernelEventFlag_CmdIn);
+            break;  
         }
 		Kernel_yield();
 	}
@@ -115,20 +111,16 @@ void User_task0(void) {
 
 void User_task1(void) {
     uint32_t local = 1;
+    debug_printf("User task #1 Stack pointer: 0x%x\n", &local);
 
 	while (true) {
-        debug_printf("User task #1 Stack pointer: 0x%x\n", &local);
-        delay(3000);
-		Kernel_yield();
-	}
-}
-
-void User_task2(void) {
-    uint32_t local = 2;
-
-    while (true) {
-        debug_printf("User task #2 Stack pointer: 0x%x\n", &local);
-        delay(3000);
+		KernelEventFlag_t handle_event = Kernel_wait_events(KernelEventFlag_CmdIn);
+		switch (handle_event)
+		{ 
+		case KernelEventFlag_CmdIn: 
+            debug_printf("CmdIn Event handled by Task1\n");
+			break;
+		}
 		Kernel_yield();
 	}
 }
