@@ -5,5 +5,6 @@
 
 void Kernel_start(void);
 void Kernel_yield(void);
+void Kernel_timer_expired(void); 
 
 #endif /* KERNEL_KERNEL_H_ */

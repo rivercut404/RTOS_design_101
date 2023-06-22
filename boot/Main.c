@@ -23,15 +23,15 @@ void User_task2(void);
 void main(void) {
     Hw_init();
 
-    uint32_t i = 100;
-    while (i--) {
-        Hal_uart_put_char('N');
-    }
-    Hal_uart_put_char('\n');
+    // uint32_t i = 100;
+    // while (i--) {
+    //     Hal_uart_put_char('N');
+    // }
+    // Hal_uart_put_char('\n');
 
-    putstr("Hello World!\n");
+    // putstr("Hello World!\n");
 
-    Printf_test();
+    // Printf_test();
 
 	// Timer_test();
 
@@ -96,27 +96,27 @@ static void Kernel_init(void) {
 
 void User_task0(void) {
     uint32_t local = 0;
-	debug_printf("User task #0 Stack pointer: 0x%x\n", &local);
     
 	while (true) {
+	    debug_printf("User task #0 Stack pointer: 0x%x\n", &local);
 		// delay(30);
 	}
 }
 
 void User_task1(void) {
     uint32_t local = 1;
-    debug_printf("User task #1 Stack pointer: 0x%x\n", &local);
 
 	while (true) {
+        debug_printf("User task #1 Stack pointer: 0x%x\n", &local);
 		// delay(30);
 	}
 }
 
 void User_task2(void) {
     uint32_t local = 2;
-    debug_printf("User task #2 Stack pointer: 0x%x\n", &local);
 
 	while (true) {
+        debug_printf("User task #2 Stack pointer: 0x%x\n", &local);
 		// delay(30);
 	}
 }

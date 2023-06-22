@@ -1,5 +1,6 @@
 #include "stdint.h"
 #include "stdbool.h"
+#include "stdio.h"
 
 #include "ARMv7AR.h"
 #include "task.h"
