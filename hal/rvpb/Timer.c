@@ -7,6 +7,7 @@
 
 #include "HalUart.h"
 #include "stdio.h"
+#include "stdlib.h"
 
 extern volatile Timer_t *Timer;
 
@@ -48,13 +49,14 @@ void Hal_timer_init(void) {
 static void interrupt_handler(void) {
     internal_1ms_counter++;
 
-	debug_printf("timer interrupt has been occured!");
+	// debug_printf("timer interrupt has been occured!");
 
 	// Call kernel API to switch user task 
 	Timer->timerxintclr = 1;
-    // if ((internal_1ms_counter % 5) == 0)
-	//     debug_printf("Timer has been expired!!");
-	//     Kernel_timer_expired();
+    if (((internal_1ms_counter % 10) == 0) && (internal_1ms_counter > 1000)) {
+	    debug_printf("Timer has been expired!!");
+	    Kernel_timer_expired();
+	}
 }
 
 uint32_t Hal_timer_get_1ms_counter(void) {
