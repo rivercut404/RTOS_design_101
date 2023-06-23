@@ -25,6 +25,7 @@ void Kernel_task_init(void) {
 	    // Set the sp for user task context
 	    sTask_list[i].stack_base = (uint8_t*)(TASK_STACK_START + (i * USR_TASK_STACK_SIZE));
 		sTask_list[i].sp = (uint32_t)sTask_list[i].stack_base + USR_TASK_STACK_SIZE - 4;
+		sTask_list[i].state = NOT_RUNNING;
 
 		sTask_list[i].sp -= sizeof(KernelTaskContext_t);
 		KernelTaskContext_t *ctx = (KernelTaskContext_t*)sTask_list[i].sp;
@@ -35,6 +36,7 @@ void Kernel_task_init(void) {
 
 void Kernel_task_start(void) {
     sNext_tcb = &sTask_list[sCurrent_tcb_index];
+	sNext_tcb->state = RUNNING;
 	Restore_context();
 }
 
@@ -46,6 +48,7 @@ uint32_t Kernel_task_create(KernelTaskFunc_t startFunc) {
 	
 	KernelTaskContext_t *ctx = (KernelTaskContext_t*)new_tcb->sp;
 	ctx->pc = (uint32_t)startFunc;
+	debug_print("new task has been created. the entry point of the task is %n\n", ctx->pc);
 
 	return (sAllocated_tcb_index - 1);
 }	
@@ -55,6 +58,11 @@ static KernelTcb_t *Scheduler_round_robin_algorithm(void) {
 	sCurrent_tcb_index %= sAllocated_tcb_index;
 
 	return &sTask_list[sCurrent_tcb_index];
+}
+
+void Kernel_task_state_manage(void) {
+	sCurrent_tcb->state = NOT_RUNNING;
+	sNext_tcb->state = RUNNING;
 }
 
 void Kernel_task_scheduler(void) {
