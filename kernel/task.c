@@ -30,7 +30,7 @@ void Kernel_task_init(void) {
 		sTask_list[i].sp -= sizeof(KernelTaskContext_t);
 		KernelTaskContext_t *ctx = (KernelTaskContext_t*)sTask_list[i].sp;
 		ctx->pc = 0;
-		ctx->spsr = ARM_MODE_BIT_SYS;
+		ctx->spsr = ARM_MODE_BIT_SYS;  // Set the default mode to SYS
     }
 }
 
