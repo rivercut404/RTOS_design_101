@@ -62,24 +62,38 @@ static KernelTcb_t *Scheduler_round_robin_algorithm(void) {
 
 void Kernel_task_state_manage(void) {
 	sCurrent_tcb->state = NOT_RUNNING;
-	sNext_tcb->state = RUNNING;
+	// sNext_tcb->state = RUNNING;
 }
 
 void Kernel_task_scheduler(void) {
     // Set the TCBs
     sCurrent_tcb = &sTask_list[sCurrent_tcb_index];
 	sNext_tcb = Scheduler_round_robin_algorithm();
-    
-	// Context switching
-    Kernel_task_context_switching();
-}
 
-__attribute__ ((naked)) void Kernel_task_context_switching(void) {
+	sNext_tcb->state = RUNNING;
+
+	// Context switching
+	Kernel_task_context_switching();
+}
+	
+	__attribute__ ((naked)) void Kernel_task_context_switching(void) {
     __asm__ ("B Save_context");
 	__asm__ ("B Restore_context");
 }
 
 static __attribute__ ((naked)) void Save_context(void) {
+	/*
+	typedef struct KernelTaskContext_t {
+		uint32_t spsr;
+		uint32_t r0_r12[13];
+		uint_32 pc;
+	} KernelTaskContext_t
+	
+	typedef struct KernelTcb_t {
+    uint32_t sp;
+	uint8_t *stack_base;
+    } KernelTcb_t;
+	*/
     // Save current task context into the current task stack 
 	__asm__ ("PUSH {lr}");
     __asm__ ("PUSH {r0, r1, r2, r3, r4, r5, r6, r7, r8, r9, r10, r11, r12}");
