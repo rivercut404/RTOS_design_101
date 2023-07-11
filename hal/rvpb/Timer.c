@@ -31,7 +31,7 @@ void Hal_timer_init(void) {
 	Timer->timerxcontrol.bits.TimerPre = 0;  // Timer prescale bit
 	Timer->timerxcontrol.bits.IntEnable = 1;
 
-	uint32_t interval_1ms = TIMER_1MHZ_INTERVAL / 1024;
+	uint32_t interval_1ms = TIMER_1MHZ_INTERVAL / 1000;
 
 	Timer->timerxload = interval_1ms;
 	Timer->timerxcontrol.bits.TimerEn = 1;
