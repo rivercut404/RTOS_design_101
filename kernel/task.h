@@ -9,8 +9,8 @@
 #define USR_TASK_STACK_SIZE 0x100000
 #define MAX_TASK_NUM        (TASK_STACK_SIZE / USR_TASK_STACK_SIZE)
 
-#define RUNNING true
-#define NOT_RUNNING false
+// #define RUNNING true
+// #define NOT_RUNNING false
 
 typedef bool task_state_t;
 
@@ -29,7 +29,7 @@ typedef struct KernelTaskContext_t {
 ***********************************************************************/
 typedef struct KernelTcb_t {
     uint32_t sp;
-	task_state_t state;  // bool type is 4-Byte size
+	// task_state_t state;  // bool type is 4-Byte size
 	uint8_t *stack_base;
 } KernelTcb_t;
 

@@ -7,3 +7,6 @@ What I need to check by the test
       HOW TO DO TEST?
         1) Revise the timer interrupt code not to cause context switching
         2) Test both interrupt ISR: UART and Timer 
+
+        => task execution goes 0 -> 1 -> 2 then there is no context switching...
+        and the jump and return to/from ISR doesn't have any problem

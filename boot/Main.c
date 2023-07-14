@@ -13,7 +13,7 @@
 
 static void Hw_init(void);
 // static void Printf_test(void);
-// static void Timer_test(void);
+static void Timer_test(void);
 static void Kernel_init(void);
 
 // User task function declaration 
@@ -23,6 +23,10 @@ void User_task2(void);
 
 void main(void) {
     Hw_init();
+
+    putstr("Hello world!\n");
+
+    Timer_test();
 
     Kernel_init();
 
@@ -55,35 +59,39 @@ static void Kernel_init(void) {
 	Kernel_start();
 }
 
-void User_task0(void) {
-    if (Kernel_get_task_state() == NOT_RUNNING)
-        Kernel_yield();
+static void Timer_test(void) {
+    for (uint32_t i=0; i<5; i++) {
+        debug_printf("current count: %u\n", Hal_timer_get_1ms_counter());
+        delay(100);
+    }
+}
 
+void User_task0(void) {
     uint32_t local = 0;
 	debug_printf("User task #0 Stack pointer: 0x%x\n", &local);
 
 	while (true) {
+        delay(100);
+        Kernel_yield();
 	}
 }
 
 void User_task1(void) {
-    if (Kernel_get_task_state() == NOT_RUNNING)
-        Kernel_yield();
-
     uint32_t local = 1;
     debug_printf("User task #1 Stack pointer: 0x%x\n", &local);
 
-	while (true) {
+	while (true) { 
+        delay(100);
+        Kernel_yield();
 	}
 }
 
 void User_task2(void) {
-    if (Kernel_get_task_state() == NOT_RUNNING)
-        Kernel_yield();
-
     uint32_t local = 2;
     debug_printf("User task #2 Stack pointer: 0x%x\n", &local);
 
-	while (true) {
+	while (true) { 
+        delay(100);
+        Kernel_yield();
     }
 }
