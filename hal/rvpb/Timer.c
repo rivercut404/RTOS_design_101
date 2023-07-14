@@ -48,8 +48,9 @@ void Hal_timer_init(void) {
 
 static void interrupt_handler(void) {
     internal_1ms_counter++;
-
-	// debug_printf("timer interrupt has been occured!");
+    
+	// timer interrupt => context switching
+	Kernel_task_state_manage();
 
 	// Call kernel API to switch user task 
 	Timer->timerxintclr = 1;

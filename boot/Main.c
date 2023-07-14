@@ -56,29 +56,34 @@ static void Kernel_init(void) {
 }
 
 void User_task0(void) {
-    // debug_printf("appr. booting time is %u unit", Hal_timer_get_1ms_counter());
+    if (Kernel_get_task_state() == NOT_RUNNING)
+        Kernel_yield();
+
     uint32_t local = 0;
+	debug_printf("User task #0 Stack pointer: 0x%x\n", &local);
 
 	while (true) {
-	    debug_printf("User task #0 Stack pointer: 0x%x\n", &local);
-        // Kernel_yield();
 	}
 }
 
 void User_task1(void) {
+    if (Kernel_get_task_state() == NOT_RUNNING)
+        Kernel_yield();
+
     uint32_t local = 1;
+    debug_printf("User task #1 Stack pointer: 0x%x\n", &local);
 
 	while (true) {
-        debug_printf("User task #1 Stack pointer: 0x%x\n", &local);
-        // Kernel_yield();
 	}
 }
 
 void User_task2(void) {
+    if (Kernel_get_task_state() == NOT_RUNNING)
+        Kernel_yield();
+
     uint32_t local = 2;
+    debug_printf("User task #2 Stack pointer: 0x%x\n", &local);
 
 	while (true) {
-        debug_printf("User task #2 Stack pointer: 0x%x\n", &local);
-	    // Kernel_yield();
     }
 }

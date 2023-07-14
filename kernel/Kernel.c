@@ -11,7 +11,3 @@ void Kernel_start(void) {
 void Kernel_yield(void) {
     Kernel_task_scheduler();
 }
-
-void Kernel_timer_expired(void) {
-    Kernel_task_scheduler();
-}

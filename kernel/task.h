@@ -2,6 +2,7 @@
 #define KERNEL_TASK_H_
 
 #include "MemoryMap.h"
+#include "stdbool.h"
 
 #define NOT_ENOUGH_TASK_NUM 0xFFFFFFFF
 
@@ -10,6 +11,8 @@
 
 #define RUNNING true
 #define NOT_RUNNING false
+
+typedef bool task_state_t;
 
 typedef struct KernelTaskContext_t {
     uint32_t spsr;
@@ -26,7 +29,7 @@ typedef struct KernelTaskContext_t {
 ***********************************************************************/
 typedef struct KernelTcb_t {
     uint32_t sp;
-	bool state;  // bool type is 4-Byte size
+	task_state_t state;  // bool type is 4-Byte size
 	uint8_t *stack_base;
 } KernelTcb_t;
 

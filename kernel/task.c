@@ -35,8 +35,9 @@ void Kernel_task_init(void) {
 }
 
 void Kernel_task_start(void) {
-    sNext_tcb = &sTask_list[sCurrent_tcb_index];
-	sNext_tcb->state = RUNNING;
+	sCurrent_tcb = &sTask_list[sCurrent_tcb_index];  // Add for a first context switching
+    sNext_tcb = &sTask_list[sCurrent_tcb_index];  // Just for restore starting task
+	sCurrent_tcb->state = RUNNING;
 	Restore_context();
 }
 
@@ -48,7 +49,7 @@ uint32_t Kernel_task_create(KernelTaskFunc_t startFunc) {
 	
 	KernelTaskContext_t *ctx = (KernelTaskContext_t*)new_tcb->sp;
 	ctx->pc = (uint32_t)startFunc;
-	debug_print("new task has been created. the entry point of the task is %n\n", ctx->pc);
+	debug_printf("new task has been created. the entry point of the task is %n\n", ctx->pc);
 
 	return (sAllocated_tcb_index - 1);
 }	
@@ -58,6 +59,11 @@ static KernelTcb_t *Scheduler_round_robin_algorithm(void) {
 	sCurrent_tcb_index %= sAllocated_tcb_index;
 
 	return &sTask_list[sCurrent_tcb_index];
+}
+
+task_state_t Kernel_get_task_state(void) {
+    // functions to check the state of the task before executing
+	return sCurrent_tcb->state;
 }
 
 void Kernel_task_state_manage(void) {
@@ -76,7 +82,7 @@ void Kernel_task_scheduler(void) {
 	Kernel_task_context_switching();
 }
 	
-	__attribute__ ((naked)) void Kernel_task_context_switching(void) {
+__attribute__ ((naked)) void Kernel_task_context_switching(void) {
     __asm__ ("B Save_context");
 	__asm__ ("B Restore_context");
 }
