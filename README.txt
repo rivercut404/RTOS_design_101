@@ -9,4 +9,10 @@ What I need to check by the test
         2) Test both interrupt ISR: UART and Timer 
 
         => task execution goes 0 -> 1 -> 2 then there is no context switching...
-        and the jump and return to/from ISR doesn't have any problem
+        There is context switching but the codes that task execute  is just to call yield function...
+        and the jump and return to/from ISR doesn't have any problem (UART, Timer both)
+  
+  7/18
+  CHECK POINT 
+    - Check the values of the registers before and after ISR
+    - What happens when calling the kernel API in the ISR (UART or Timer)

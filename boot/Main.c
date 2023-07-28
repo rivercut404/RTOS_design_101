@@ -68,9 +68,9 @@ static void Timer_test(void) {
 
 void User_task0(void) {
     uint32_t local = 0;
-	debug_printf("User task #0 Stack pointer: 0x%x\n", &local);
 
 	while (true) {
+	    debug_printf("User task #0 Stack pointer: 0x%x\n", &local);
         delay(100);
         Kernel_yield();
 	}
@@ -78,9 +78,9 @@ void User_task0(void) {
 
 void User_task1(void) {
     uint32_t local = 1;
-    debug_printf("User task #1 Stack pointer: 0x%x\n", &local);
 
 	while (true) { 
+        debug_printf("User task #1 Stack pointer: 0x%x\n", &local);
         delay(100);
         Kernel_yield();
 	}
@@ -88,9 +88,9 @@ void User_task1(void) {
 
 void User_task2(void) {
     uint32_t local = 2;
-    debug_printf("User task #2 Stack pointer: 0x%x\n", &local);
 
 	while (true) { 
+        debug_printf("User task #2 Stack pointer: 0x%x\n", &local);
         delay(100);
         Kernel_yield();
     }

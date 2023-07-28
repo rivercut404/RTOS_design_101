@@ -197,21 +197,21 @@ LOAD linker stubs
  .comment       0x0000000000000059       0x5a build/task.o
  .comment       0x0000000000000059       0x5a build/Kernel.o
 
-.debug_line     0x0000000000000000      0x9f7
+.debug_line     0x0000000000000000      0xa01
  .debug_line    0x0000000000000000       0x6d build/Entry.os
- .debug_line    0x000000000000006d      0x104 build/Main.o
- .debug_line    0x0000000000000171       0x4e build/Handler.o
- .debug_line    0x00000000000001bf       0x68 build/Regs.o
- .debug_line    0x0000000000000227      0x126 build/Interrupt.o
- .debug_line    0x000000000000034d       0xf2 build/Uart.o
- .debug_line    0x000000000000043f       0xe0 build/Timer.o
- .debug_line    0x000000000000051f       0x6a build/stdlib.o
- .debug_line    0x0000000000000589      0x180 build/stdio.o
- .debug_line    0x0000000000000709       0x6f build/armcpu.o
- .debug_line    0x0000000000000778      0x166 build/task.o
- .debug_line    0x00000000000008de       0x4e build/Kernel.o
- .debug_line    0x000000000000092c       0x74 /usr/lib/gcc/arm-none-eabi/9.2.1/libgcc.a(_udivsi3.o)
- .debug_line    0x00000000000009a0       0x57 /usr/lib/gcc/arm-none-eabi/9.2.1/libgcc.a(_dvmd_tls.o)
+ .debug_line    0x000000000000006d      0x10e build/Main.o
+ .debug_line    0x000000000000017b       0x4e build/Handler.o
+ .debug_line    0x00000000000001c9       0x68 build/Regs.o
+ .debug_line    0x0000000000000231      0x126 build/Interrupt.o
+ .debug_line    0x0000000000000357       0xf2 build/Uart.o
+ .debug_line    0x0000000000000449       0xe0 build/Timer.o
+ .debug_line    0x0000000000000529       0x6a build/stdlib.o
+ .debug_line    0x0000000000000593      0x180 build/stdio.o
+ .debug_line    0x0000000000000713       0x6f build/armcpu.o
+ .debug_line    0x0000000000000782      0x166 build/task.o
+ .debug_line    0x00000000000008e8       0x4e build/Kernel.o
+ .debug_line    0x0000000000000936       0x74 /usr/lib/gcc/arm-none-eabi/9.2.1/libgcc.a(_udivsi3.o)
+ .debug_line    0x00000000000009aa       0x57 /usr/lib/gcc/arm-none-eabi/9.2.1/libgcc.a(_dvmd_tls.o)
 
 .debug_info     0x0000000000000000     0x30a0
  .debug_info    0x0000000000000000       0x26 build/Entry.os
