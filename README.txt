@@ -14,3 +14,5 @@ Development Description
   - If timer interrupt occur then the state of the task executing goto NOT_RUNNING (by kernel API)
   
   - At the beginning of each task, Check the state of its own state and if NOT_RUNNING, then yeild
+    
+    yeild function has not been called => So, No context switching
