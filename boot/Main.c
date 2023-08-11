@@ -60,9 +60,10 @@ void User_task0(void) {
         Kernel_yield();
 
     uint32_t local = 0;
-	debug_printf("User task #0 Stack pointer: 0x%x\n", &local);
 
 	while (true) {
+        delay(100);
+	    debug_printf("User task #0 Stack pointer: 0x%x\n", &local);
 	}
 }
 
@@ -71,9 +72,10 @@ void User_task1(void) {
         Kernel_yield();
 
     uint32_t local = 1;
-    debug_printf("User task #1 Stack pointer: 0x%x\n", &local);
 
 	while (true) {
+        delay(100);
+        debug_printf("User task #1 Stack pointer: 0x%x\n", &local);
 	}
 }
 
@@ -82,8 +84,9 @@ void User_task2(void) {
         Kernel_yield();
 
     uint32_t local = 2;
-    debug_printf("User task #2 Stack pointer: 0x%x\n", &local);
 
 	while (true) {
+        delay(100);
+        debug_printf("User task #2 Stack pointer: 0x%x\n", &local);
     }
 }

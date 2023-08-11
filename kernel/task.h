@@ -38,6 +38,7 @@ typedef void (*KernelTaskFunc_t) (void);
 void Kernel_task_init(void);
 void Kernel_task_start(void);
 uint32_t Kernel_task_create(KernelTaskFunc_t startFunc);
+task_state_t Kernel_get_task_state(void);
 void Kernel_task_state_manage(void);
 void Kernel_task_context_switching(void);
 void Kernel_task_scheduler(void);
