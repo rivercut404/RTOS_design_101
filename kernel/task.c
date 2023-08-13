@@ -69,6 +69,8 @@ task_state_t Kernel_get_task_state(void) {
 void Kernel_task_state_manage(void) {
 	sCurrent_tcb->state = NOT_RUNNING;
 	// sNext_tcb->state = RUNNING;
+	debug_printf("Task %d has been NOT_RUNNING state\n", sCurrent_tcb_index);
+	debug_printf("Task %d would be executed\n", (sCurrent_tcb_index+1)%sAllocated_tcb_index);
 }
 
 void Kernel_task_scheduler(void) {
