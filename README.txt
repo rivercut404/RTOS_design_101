@@ -13,6 +13,8 @@ Development Description
 - When and Where the state of executing task should be changed? 
   - If timer interrupt occur then the state of the task executing goto NOT_RUNNING (by kernel API)
   
-  - At the beginning of each task, Check the state of its own state and if NOT_RUNNING, then yeild
-    
-    yeild function has not been called => So, No context switching
+  - At the beginning of infinite loop of each task, Check the state of its own state and if NOT_RUNNING, then yeild
+      context switching works well... 
+      Basic implementation of a preemptive system has been completed! 
+
+  * The first context switching is a little wierd... 0 => 2 rather 0 => 1   
