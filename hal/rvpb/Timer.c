@@ -48,17 +48,10 @@ void Hal_timer_init(void) {
 
 static void interrupt_handler(void) {
     internal_1ms_counter++;
-    
+
 	// timer interrupt => context switching
 	Kernel_task_state_manage();
-	// Call kernel API to switch user task 
 	Timer->timerxintclr = 1;
-    // if (((internal_1ms_counter % 10) == 0) && (internal_1ms_counter > 1000)) {
-	//     debug_printf("Timer has been expired!!");
-	    // Kernel_timer_expired();  
-		// If Kernel API for context switching is called in ISR, then LR is set to 0
-		// So... maybe because of that the reset handler is executed after the context switching
-	// }
 }
 
 uint32_t Hal_timer_get_1ms_counter(void) {
