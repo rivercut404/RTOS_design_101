@@ -20,16 +20,10 @@ typedef struct KernelTaskContext_t {
 	uint32_t pc;
 } KernelTaskContext_t;
 
-/* Implementation of a two-state process model for preemptive switching
-- TODO List
-	- check the TCB structure and size
-	- check the code that initializes the TCB especially the part that allocate the memory for TCB
-	- Implement + revise the function codes that initializes and allocate 
-	- ...
-***********************************************************************/
 typedef struct KernelTcb_t {
     uint32_t sp;
-	task_state_t state;  // bool type is 4-Byte size
+	task_state_t state; // bool type is 4-Byte size
+	uint32_t timeslice; // timeslice for scheduling, default value: 20 
 	uint8_t *stack_base;
 } KernelTcb_t;
 

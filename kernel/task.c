@@ -26,6 +26,7 @@ void Kernel_task_init(void) {
 	    sTask_list[i].stack_base = (uint8_t*)(TASK_STACK_START + (i * USR_TASK_STACK_SIZE));
 		sTask_list[i].sp = (uint32_t)sTask_list[i].stack_base + USR_TASK_STACK_SIZE - 4;
 		sTask_list[i].state = NOT_RUNNING;
+		sTask_list[i].timeslice = 20;
 
 		sTask_list[i].sp -= sizeof(KernelTaskContext_t);
 		KernelTaskContext_t *ctx = (KernelTaskContext_t*)sTask_list[i].sp;
