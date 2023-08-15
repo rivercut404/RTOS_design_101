@@ -1,21 +1,14 @@
 Development Description 
 
-1. Object: Implementation of a preemptive system in conjunction with the timer interrupt
+1. Object: Introduction of timeslice as a member variable of TCB for task scheduling
 
-2. Progress: Context switching by using yeild function works well... 
-             But, There is some issues in implementing context switching in timer interrupt handler 
-             maybe, related to interrupt context. => Resolved!!
+2. Implementation Procedure
 
+  - Add a variable, timeslice, in the TCB (maybe unsigned int32 type)
 
-3. Issue and Conquer
-
-- Introduction of two-state model
-
-- When and Where the state of executing task should be changed? 
-  - If timer interrupt occur then the state of the executing task goto NOT_RUNNING state (by kernel API)
+  - Coupled with timer interrupt, decrement timeslice value for each time tick
+    - In time interrupt ISR, add a function call that decrement current executing task's timeslice value 
   
-  - At the beginning of infinite loop of each task, Check the state of its own state and if NOT_RUNNING, then yeild
-      context switching works well... 
-      Basic implementation of a preemptive system has been completed! 
-
-  * The first context switching is a little wierd... 0 => 2 rather 0 => 1   
+  - Then... scheduler, Kernel_task_scheduler() function, set the newly executing task's timeslice value (just pre-set value)
+    and then run new task! 
+    
