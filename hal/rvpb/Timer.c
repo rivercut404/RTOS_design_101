@@ -48,9 +48,11 @@ void Hal_timer_init(void) {
 
 static void interrupt_handler(void) {
     internal_1ms_counter++;
-
-	// timer interrupt => context switching
-	Kernel_task_state_manage();
+    // Decrement the timeslice value of the current executing task
+	Kernel_current_timeslice_decrement();
+	if (Kernel_get_timeslice_value() == 0) {
+		Kernel_task_state_manage();
+	}
 	Timer->timerxintclr = 1;
 }
 

@@ -12,6 +12,9 @@ Development Description
 
   - Coupled with timer interrupt, decrement timeslice value for each time tick
     - In time interrupt ISR, add a function call that decrement current executing task's timeslice value 
+      - Add a kernel API function that decrement current executing task's timeslice value: Kernel_current_timeslice_decrement()
+      - Add a kernel API function that return the current timeslice value: Kernel_get_timeslice_value()
+      - Revise the ISR to call the function that decrement the current timeslice value
   
   - Then... scheduler, Kernel_task_scheduler() function, set the newly executing task's timeslice value (just pre-set value)
     and then run new task! 

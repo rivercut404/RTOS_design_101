@@ -34,6 +34,8 @@ void Kernel_task_start(void);
 uint32_t Kernel_task_create(KernelTaskFunc_t startFunc);
 task_state_t Kernel_get_task_state(void);
 void Kernel_task_state_manage(void);
+uint32_t Kernel_get_timeslice_value(void);
+void Kernel_current_timeslice_decrement(void);
 void Kernel_task_context_switching(void);
 void Kernel_task_scheduler(void);
 

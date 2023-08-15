@@ -71,6 +71,14 @@ void Kernel_task_state_manage(void) {
 	sCurrent_tcb->state = NOT_RUNNING;
 }
 
+uint32_t Kernel_get_timeslice_value(void) {
+	return sCurrent_tcb->timeslice;
+}
+
+void Kernel_current_timeslice_decrement(void) {
+	sCurrent_tcb->timeslice--;
+}
+
 void Kernel_task_scheduler(void) {
     // Set the TCBs
     sCurrent_tcb = &sTask_list[sCurrent_tcb_index];
