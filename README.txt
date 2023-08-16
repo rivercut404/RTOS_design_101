@@ -35,4 +35,10 @@ Issue : What if the timer interrupt occur while context switching is ongoing?
   - Disable at the beginning of the scheduler function
 
   *** Where and When and How to enable it...?
+
+- Change the paradigm => no need to disable
+  - If our system distinguish the usr mode and sys mode,
+    - Then, we can decrement the timeslice only when user task is executing 
+    - By referencing the SPSR in the Timer interrupt ISR
+
     
