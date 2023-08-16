@@ -18,4 +18,21 @@ Development Description
   
   - Then... scheduler, Kernel_task_scheduler() function, set the newly executing task's timeslice value (just pre-set value)
     and then run new task! 
+
+3. Issues and Handling
+
+[Aug. 16]
+Issue : What if the timer interrupt occur while context switching is ongoing?
+
+- The term "context switching" in this context include the user task state transition to NOT_RUNNING, 
+  internal checking of the current task state, call the yield() function.
+
+- One method is that disable the timer interrupt before context switching then enable it after switching
+  - It would affect the accuracy of absolute execution time and fairness
+  - Let's consider timeslice as just a multiple of the time tick 
+
+  - Mask Timer interrupt while scheduling
+  - Disable at the beginning of the scheduler function
+
+  *** Where and When and How to enable it...?
     

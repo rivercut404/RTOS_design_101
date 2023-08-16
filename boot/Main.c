@@ -56,6 +56,7 @@ static void Kernel_init(void) {
 }
 
 void User_task0(void) {
+    // Hal_interrupt_enable(TIMER_INTERRUPT);
     uint32_t local = 0;
 
 	while (true) {
@@ -68,6 +69,7 @@ void User_task0(void) {
 }
 
 void User_task1(void) {
+    // Hal_interrupt_enable(TIMER_INTERRUPT);
     uint32_t local = 1;
 
 	while (true) {
@@ -80,6 +82,7 @@ void User_task1(void) {
 }
 
 void User_task2(void) {
+    // Hal_interrupt_enable(TIMER_INTERRUPT);
     uint32_t local = 2;
 
 	while (true) {

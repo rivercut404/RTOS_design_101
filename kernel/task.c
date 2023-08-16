@@ -4,6 +4,8 @@
 
 #include "ARMv7AR.h"
 #include "task.h"
+#include "Timer.h"
+#include "HalInterrupt.h"
 
 static KernelTcb_t sTask_list[MAX_TASK_NUM];
 static uint32_t sAllocated_tcb_index;
@@ -80,6 +82,7 @@ void Kernel_current_timeslice_decrement(void) {
 }
 
 void Kernel_task_scheduler(void) {
+	Hal_interrupt_disable(TIMER_INTERRUPT);
     // Set the TCBs
     sCurrent_tcb = &sTask_list[sCurrent_tcb_index];
 	sNext_tcb = Scheduler_round_robin_algorithm();
